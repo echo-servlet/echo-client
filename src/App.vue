@@ -10,7 +10,7 @@
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
-import axios, { AxiosResponse, AxiosError } from "axios";
+import axios from "axios";
 
 export default {
   name: 'app',
@@ -27,12 +27,12 @@ export default {
       })
               .then((response) => {
                 this.messages = response.data;
-                console.log("success");
-                console.log( this.messages);
+                //console.log("success");
+                //console.log( this.messages);
                 this.$emit("success");
               })
-              .catch((res) => {
-                console.log("CATCH [Message.vue]");
+              .catch(() => {
+                //console.log("CATCH [Message.vue]");
               });
     },
 
