@@ -1,11 +1,9 @@
 const express = require('express');
-const path = require('path');
-const serveStatic = require('serve-static');
+const port = process.env.PORT || 8081;
+const app = express();
 
-let app = express();
-app.use(serveStatic(__dirname + "/dist"));
-
-const port = process.env.PORT || 5000;
-app.listen(port, () => {
-    console.log('Listening on port ' + port)
+app.use(express.static(__dirname + "/dist/"));
+app.get(/.*/, function (req, res) {
+    res.sendFile(__dirname + "/dist/index.html");
 });
+app.listen(port);
