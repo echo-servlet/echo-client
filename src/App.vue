@@ -2,18 +2,36 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
     <div>hi shannon</div>
+    <div v-for="(message, index) in messages" v-bind:key="index">
+      {{message}}
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+  import axios from "axios";
 export default {
-  name: 'app',
-  components: {
-    HelloWorld
+  name: "App",
+  data: () => ({
+    messages: []
+  }),
+  methods: {
+    getMessages() {
+      axios
+              .get("https://echo-servlet.herokuapp.com/messages")
+              .then((response) => {
+                this.messages = response.data;
+                this.$emit("success");
+              })
+              .catch(() => {
+              });
+    },
+
+  },
+  created() {
+    this.getMessages();
   }
-}
+};
 </script>
 
 <style>
