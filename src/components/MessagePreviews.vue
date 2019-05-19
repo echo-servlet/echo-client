@@ -53,7 +53,7 @@
             createChat() {
                 axios
                     .post("https://echo-servlet.herokuapp.com/chat", {
-                        group: 0,
+                        groupId: 0,
                         title: "Gina"
                     })
                     .then((response) => {
