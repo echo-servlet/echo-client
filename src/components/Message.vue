@@ -28,13 +28,11 @@
     import axios, { AxiosResponse, AxiosError } from "axios";
     export default {
         name: "Message",
-        props: ['chatId'],
+        props: ['chatId', 'userId'],
         data: () => ({
             messages: [],
             newMessage: "",
-            //chatId: 1,
-            cId: 1,
-            userId: 1
+            cId: 1
         }),
         watch: {
             chatId: function () {

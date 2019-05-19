@@ -5,7 +5,7 @@
                 <MessagePreviews v-on:chatUpdate="updateChat"/>
             </div>
             <div class="md-layout-item">
-                <Message v-bind:chatId="chatId"/>
+                <Message v-bind:chatId="chatId" v-bind:userId="userId"/>
             </div>
         </div>
     </div>
@@ -25,7 +25,8 @@
     export default {
         name: "Chat",
         data: () => ({
-            chatId: 1
+            chatId: 1,
+            userId: null
         }),
         components: {
             'Message' : Message,
@@ -35,6 +36,10 @@
             updateChat(chatId) {
                 this.chatId = chatId;
             }
+        },
+        created() {
+            this.userId = this.$route.params.userId
+            console.log("[Chat.vue] userId: " + this.userId)
         }
     }
 </script>

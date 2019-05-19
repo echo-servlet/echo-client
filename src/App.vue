@@ -57,7 +57,8 @@
         </md-toolbar>
 
         <md-list>
-          <router-link to="/chat" tag="li">
+<!--          <router-link to="/chat" tag="li">-->
+            <router-link :to="{ name: 'chat', params: { userId: userId } }" tag="li">
             <md-list-item @click="changeActive(0)">
               <md-icon v-if="active==0" class="nav_button_active">chat_bubble</md-icon>
               <md-icon v-if="active!=0" class="nav_button">chat_bubble</md-icon>
@@ -103,6 +104,7 @@
 <script>
   import Vue from "vue";
   import VueChatScroll from "vue-chat-scroll";
+  import axios from "axios";
   import { GoogleLogin, LoaderPlugin } from "vue-google-login";
   import {
     MdApp,
@@ -146,6 +148,7 @@
       menuVisible: false,
       active: null,
       isLoggedIn: null,
+      userId: null,
       params: {
         client_id:
                 "474603672707-q9fsarap9hqa131ilol56dg7vc1vrfob.apps.googleusercontent.com"
@@ -162,12 +165,32 @@
         console.log(googleUser);
         console.log(googleUser.getBasicProfile());
         this.isLoggedIn = true;
+        this.getUser(googleUser);
+      },
+      getUser(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        axios
+                .post("https://echo-servlet.herokuapp.com/user", {
+                  email: profile.U3,
+                  firstName: profile.ofa,
+                  lastName: profile.wea,
+                  picture: profile.Paa
+                })
+                .then((response) => {
+                  console.log(
+                          "[MessagePreviews.vue] new user: " + JSON.stringify(response.data)
+                  );
+                  this.userId = response.data.id;
+                  console.log("current user: " + this.userId);
+                })
+                .catch(() => {
+                  console.log("[MessagePreviews.vue] login backend error");
+                });
       },
       onFailure() {
         console.log("failed");
       },
       logout() {
-        console.log("hi");
         this.isLoggedIn = false;
         Vue.GoogleAuth.then(auth2 => {
           console.log(auth2.isSignedIn.get());
@@ -177,8 +200,11 @@
     created() {
       Vue.GoogleAuth.then(auth2 => {
         this.isLoggedIn = auth2.isSignedIn.get();
-        console.log(this.isLoggedIn);
       });
+      Vue.GoogleAuth.then(auth2 => {
+        this.getUser(auth2.currentUser.get());
+      });
+
     }
   };
 </script>
