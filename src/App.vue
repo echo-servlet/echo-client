@@ -131,7 +131,7 @@
   Vue.use(GoogleLogin);
   Vue.use(LoaderPlugin, {
     client_id:
-            "474603672707-i83a2a3uuaits83jt8ko9sipqon9p23f.apps.googleusercontent.com"
+            "474603672707-q9fsarap9hqa131ilol56dg7vc1vrfob.apps.googleusercontent.com"
   });
   // Vue.GoogleAuth.then(auth2 => {
   //   console.log(auth2.isSignedIn.get());
@@ -148,7 +148,7 @@
       isLoggedIn: null,
       params: {
         client_id:
-                "474603672707-i83a2a3uuaits83jt8ko9sipqon9p23f.apps.googleusercontent.com"
+                "474603672707-q9fsarap9hqa131ilol56dg7vc1vrfob.apps.googleusercontent.com"
       }
     }),
     methods: {
